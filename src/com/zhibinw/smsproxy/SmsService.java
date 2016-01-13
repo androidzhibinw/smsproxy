@@ -118,7 +118,6 @@ public class SmsService extends Service {
 			} catch (Exception e) {
 				e.printStackTrace();
 				debug("ClientThread exception: " + e);
-				
 			}
 		}
 	}
