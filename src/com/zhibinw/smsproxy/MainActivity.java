@@ -5,10 +5,13 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SyncStateContract.Constants;
 import android.app.Activity;
 import android.content.Intent;
 import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
@@ -17,10 +20,14 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//startService(new Intent(this,SmsService.class));
-		SmsManager smsManager = SmsManager.getDefault();
-		smsManager.sendTextMessage("10086", null, "10086", null, null);
-
+		//sendhMessage("", "test msg 1 ");
+		startService(new Intent(this,SmsService.class));
 	}
+	@Override
+	protected void onDestroy() {
+//		startService(new Intent(this,SmsService.class).putExtra(SmsService.FLAG_EXIT, true));
+		super.onDestroy();
+	}
+	
 
 }

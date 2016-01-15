@@ -22,6 +22,8 @@ public class SmsService extends Service {
 	private static final int MSG_SMS = 1234;
 	private ServiceHandler mServiceHandler;
 	private boolean DEBUG = true;
+	public static final String FLAG_EXIT = "EXIT";
+
 
 	private void debug(String msg) {
 		if (DEBUG) {
@@ -51,13 +53,16 @@ public class SmsService extends Service {
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
+		debug("SmsService onDestroy");
 		super.onDestroy();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO Auto-generated method stub
+		
+		if (intent.getBooleanExtra(FLAG_EXIT, false)) {
+			stopSelf();
+		}
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -70,11 +75,14 @@ public class SmsService extends Service {
 	private void sendsms(String obj) {
 		// TODO Auto-generated method stub
 		debug("sendsms:" + obj);
-		String address = null;
-		String smsText = null;
-		SmsManager smsManager = SmsManager.getDefault();
-		smsManager.sendTextMessage(address, null, smsText, null, null);
+//		String address = null;
+//		String smsText = null;
 		debug("sendsms:" + obj + "done");
+	}
+
+	public void sendhMessage(String phoneNumber, String textMessage) {
+		SmsManager smsManager = SmsManager.getDefault();
+		smsManager.sendTextMessage(phoneNumber, null, textMessage, null, null);
 	}
 
 	private final class ServiceHandler extends Handler {
@@ -118,6 +126,7 @@ public class SmsService extends Service {
 			} catch (Exception e) {
 				e.printStackTrace();
 				debug("ClientThread exception: " + e);
+				
 			}
 		}
 	}
