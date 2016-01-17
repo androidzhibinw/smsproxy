@@ -20,12 +20,11 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//sendhMessage("", "test msg 1 ");
 		startService(new Intent(this,SmsService.class));
 	}
 	@Override
 	protected void onDestroy() {
-//		startService(new Intent(this,SmsService.class).putExtra(SmsService.FLAG_EXIT, true));
+		startService(new Intent(this,SmsService.class).putExtra(SmsService.FLAG_EXIT, true));
 		super.onDestroy();
 	}
 	
